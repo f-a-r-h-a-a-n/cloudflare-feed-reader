@@ -17,9 +17,9 @@ The sweep must come back empty apart from the copyright line in `LICENSE`.
 Two traps worth naming, both of which have already bitten once:
 
 - **Encoded variants hide from a plain search.** A string replaced everywhere it
-  appears as `General News` can survive as `General+News` in a URL
-  assertion and `General%20News` in a query string. Search for
-  the encoded forms too, or trust the suite to catch it.
+  appears as `General News` can survive as `General+News` in a URL assertion and
+  `General%20News` in a query string. Search for the encoded forms too, or trust
+  the suite to catch it.
 - **Regex-escaped variants hide as well.** `example.com` in prose is
   `example\.com` inside a test regex, and a literal replace misses it.
 
