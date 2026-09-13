@@ -1,0 +1,27 @@
+# Companion Worker for the feed reader: scheduled polling.
+#
+# Cloudflare Pages cannot run on a schedule, so this standalone Worker owns the
+# cron. It binds the SAME D1 database as the reader and writes new items into
+# it. Deployed separately: `wrangler deploy` from this directory.
+
+name = "PLACEHOLDER_YOUR_POLLER_WORKER_NAME"
+main = "src/index.ts"
+compatibility_date = "2026-07-01"
+
+[triggers]
+# Poll every 20 minutes. Conditional GETs keep an unchanged feed near-free.
+# If you change this, change POLL_INTERVAL_MIN in functions/_shared/config.ts to
+# match, or the reader's "next pull" countdown will lie.
+crons = ["*/20 * * * *"]
+
+[[d1_databases]]
+binding = "READER_DB"
+database_name = "PLACEHOLDER_YOUR_D1_DATABASE_NAME"
+# MUST be the same id as in ../wrangler.toml.
+database_id = "PLACEHOLDER_SET_AFTER_D1_CREATE"
+
+# Secrets, set with `wrangler secret put` from this directory:
+#   POLL_TRIGGER_SECRET   gates the on-demand /?secret=... trigger (cron does
+#                         not need it). Required, or the trigger returns 503.
+#   YOUTUBE_API_KEY       optional; only if you subscribe to YouTube channels
+#                         and want Shorts excluded. See README.md.

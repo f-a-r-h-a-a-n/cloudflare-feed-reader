@@ -1,0 +1,26 @@
+{
+  // Type gate for the Pages Functions and the feed-poller Worker.
+  //
+  // It exists because `wrangler deploy --dry-run` is not a gate: esbuild bundles
+  // happily past a free identifier, which is how a `cleanup is not defined`
+  // ReferenceError once reached production. Run with `npm run typecheck`.
+  //
+  // If you drop this into an existing project that already has a tsconfig.json,
+  // keep this one as a second config for the Worker code and point your
+  // typecheck script at it; the two have different `types` and `lib` needs.
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["es2022"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["@cloudflare/workers-types"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowJs": false,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true
+  },
+  "include": ["functions/**/*.ts", "feed-poller/src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

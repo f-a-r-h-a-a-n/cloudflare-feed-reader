@@ -1,0 +1,28 @@
+{
+  "name": "cloudflare-feed-reader",
+  "version": "1.0.0",
+  "description": "A private RSS/Atom/JSON feed reader for Cloudflare Pages Functions and D1, with a companion cron Worker.",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "dev": "wrangler pages dev",
+    "poller:dev": "cd feed-poller && wrangler dev --persist-to ../.wrangler/state --port 8788",
+    "poller:deploy": "cd feed-poller && wrangler deploy",
+    "db:local": "wrangler d1 execute $npm_config_db --local --file=db/schema.sql",
+    "db:remote": "wrangler d1 execute $npm_config_db --remote --file=db/schema.sql",
+    "workers:build": "wrangler pages functions build --outdir=./dist/worker/",
+    "verify": "npm run typecheck && node scripts/verify/verify-feed.mjs \"$PWD\" \"${TMPDIR:-/tmp}\" && node scripts/verify/verify-scrape.mjs \"$PWD\" \"${TMPDIR:-/tmp}\" && node scripts/verify/verify-poller.mjs \"$PWD\" \"${TMPDIR:-/tmp}\" && node scripts/verify/verify-page.mjs \"$PWD\" \"${TMPDIR:-/tmp}\" && node scripts/verify/verify-action.mjs \"$PWD\" \"${TMPDIR:-/tmp}\""
+  },
+  "dependencies": {
+    "fast-xml-parser": "^5.8.0",
+    "jose": "^6.2.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260724.1",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.9.0",
+    "wrangler": "^4.111.0"
+  }
+}

@@ -1,0 +1,29 @@
+# Cloudflare Pages configuration for the feed reader.
+#
+# Copy this file, fill in the three placeholders, and the reader Functions ship
+# with every Pages deploy. Provisioning sequence: README.md.
+#
+# Deploying to WORKERS with static assets instead of Pages? Do not use this file.
+# See docs/WORKERS.md; the Functions themselves are unchanged either way.
+
+name = "PLACEHOLDER_YOUR_PAGES_PROJECT_NAME"
+compatibility_date = "2026-07-01"
+
+# The directory Pages serves as static assets. The reader itself is a Function,
+# so this only needs to exist; `public/` is what this repo ships.
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "READER_DB"
+database_name = "PLACEHOLDER_YOUR_D1_DATABASE_NAME"
+# From `wrangler d1 create <name>`. This MUST match the id in
+# feed-poller/wrangler.toml: that is what makes the reader and the poller share
+# one database, and a mismatch is silent (the reader simply shows no items).
+database_id = "PLACEHOLDER_SET_AFTER_D1_CREATE"
+
+# Access variables are NOT set here. They are secrets and near-secrets, so set
+# them in the Pages dashboard (Settings, Variables and Secrets) or with
+# `wrangler pages secret put`. See README.md step 3:
+#   CF_ACCESS_TEAM_DOMAIN    your-team.cloudflareaccess.com
+#   CF_ACCESS_AUD            the Access application's Audience tag
+#   READER_ALLOWED_EMAILS    comma-separated allowlist, e.g. you@example.com
