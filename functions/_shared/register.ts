@@ -1,13 +1,11 @@
 /**
- * The Dispatch register, for the two owner surfaces (23 August 2026).
+ * The shared CSS register: faces, design tokens and base rules.
  *
- * /studio and /rss are Pages Functions rather than Astro pages, so they cannot
- * import the fontsource CSS the site builds with: every woff2 in _astro/ is
- * fingerprinted and the hash moves on any rebuild that touches the faces.
- * The faces are self-hosted, so the two latin roman subsets are
- * copied to public/fonts/ at stable paths and declared here. Both faces are
- * OFL-1.1 and their licences ship beside them, which the licence requires of
- * anyone redistributing them.
+ * A Pages Function cannot import the fingerprinted CSS a site build emits,
+ * because the hash moves on any rebuild that touches the faces. So the two
+ * latin roman subsets are self-hosted at stable paths under public/fonts/ and
+ * declared here. Both faces are OFL-1.1 and their licences ship beside them,
+ * which the licence requires of anyone redistributing them.
  *
  * ONE DEFINITION, TWO CONSUMERS. The values below are lifted from
  * src/styles/tokens.css and MUST match it exactly. They did not on 23 August

@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS youtube_video_class (
 
 -- One row per poll, so "looks healthy, delivers nothing" is answerable after
 -- the fact instead of needing a live `wrangler tail`. Written by the poller;
--- read by the Reader panel on /studio.
+-- read by the reader's status route and its pull clock.
 CREATE TABLE IF NOT EXISTS poll_runs (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   started_at TEXT NOT NULL,

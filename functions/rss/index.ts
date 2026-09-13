@@ -2,7 +2,7 @@
  * GET /rss — the owner's private feed reader.
  *
  * A serif reading surface wrapped in a monospace instrument panel, behind the
- * same Cloudflare Access owner gate as /studio (requireOwner). The companion
+ * owner gate in functions/_auth.ts (requireOwner). The companion
  * feed-poller Worker fills READER_DB on a cron; this page reads it, plus small
  * POST forms to /api/reader/action for mutations.
  *
@@ -1843,7 +1843,6 @@ async function scrapePreview(target: string, folders: string[], back: string, fo
 /* ── handler ────────────────────────────────────────────────── */
 
 export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
-  // The reader has its own Access application; fall back to the studio AUD
   const auth = await requireOwner(request, env);
   if (!auth.ok) return auth.response;
 
@@ -1864,9 +1863,8 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const [feedsRes, unreadRes, lastRun] = await Promise.all([
     db.prepare('SELECT id, title, feed_url, site_url, folder, last_status, last_error FROM feeds ORDER BY LOWER(title), feed_url').all<FeedRow>(),
     db.prepare('SELECT feed_id, COUNT(*) AS n FROM items WHERE is_read = 0 GROUP BY feed_id').all<{ feed_id: number; n: number }>(),
-    // poll_runs may be absent on an unmigrated database (the /studio Reader
-    // panel tolerates the same); the pull clock then reads 'no pull recorded'
-    // rather than the page failing.
+    // poll_runs may be absent on a database created before it was added; the
+    // pull clock then reads 'no pull recorded' rather than the page failing.
     db.prepare('SELECT id, started_at, finished_at FROM poll_runs ORDER BY id DESC LIMIT 1').first<PollRun>().catch(() => null),
   ]);
   const feeds = feedsRes.results ?? [];

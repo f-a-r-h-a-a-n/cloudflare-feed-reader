@@ -9,8 +9,8 @@
  * client layer needs to answer "has a pull landed since this page was rendered?".
  * No item data crosses the wire, and the response is never cached.
  *
- * `poll_runs` may be absent on an unmigrated database (the /studio Reader panel
- * tolerates the same), so a failed read degrades to `poll: null` rather than a 500:
+ * `poll_runs` may be absent on a database created before it was added, so a
+ * failed read degrades to `poll: null` rather than a 500:
  * the client then simply never sees a new run and leaves the page alone.
  */
 import type { Env } from '../../_lib';

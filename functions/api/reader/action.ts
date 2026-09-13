@@ -83,7 +83,6 @@ async function folderFrom(form: FormData, db: Env['READER_DB']): Promise<string 
 }
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
-  // The reader has its own Access application; fall back to the studio AUD
   const auth = await requireOwner(request, env);
   if (!auth.ok) return auth.response;
 
