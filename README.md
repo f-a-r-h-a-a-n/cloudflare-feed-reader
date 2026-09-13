@@ -204,4 +204,11 @@ as the upstream reader changes.
 
 ## Licence
 
-MIT, except the fonts noted above. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
+
+**Except the fonts.** `public/fonts/` ships Archivo and Newsreader under the SIL
+Open Font License 1.1, not under the MIT licence above. Their licences travel
+with them as `public/fonts/OFL-Archivo.txt` and `public/fonts/OFL-Newsreader.txt`
+and must be kept alongside the files if you redistribute them. Deleting the four
+files removes the obligation and costs you only the typography, since every CSS
+stack falls back to system faces.

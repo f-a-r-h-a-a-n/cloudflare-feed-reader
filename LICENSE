@@ -19,11 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-The two font files in public/fonts/ are NOT covered by the licence above.
-Archivo and Newsreader are licensed under the SIL Open Font License 1.1; their
-licences ship beside them as public/fonts/OFL-Archivo.txt and
-public/fonts/OFL-Newsreader.txt and must be kept with the files if you
-redistribute them.
